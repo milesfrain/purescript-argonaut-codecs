@@ -43,7 +43,7 @@ instance decodeJsonMaybe :: DecodeJson a => DecodeJson (Maybe a) where
 instance decodeJsonTuple :: (DecodeJson a, DecodeJson b) => DecodeJson (Tuple a b) where
   decodeJson j = decodeJson j >>= f
     where
-    f (a : b : Nil) = Tuple <$> decodeJson a <*> decodeJson b
+    f [a, b] = Tuple <$> decodeJson a <*> decodeJson b
     f _ = Left "Couldn't decode Tuple"
 
 instance decodeJsonEither :: (DecodeJson a, DecodeJson b) => DecodeJson (Either a b) where
